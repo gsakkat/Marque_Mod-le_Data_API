@@ -130,6 +130,38 @@ def save_data_api():
         return "Data Saved", 200
 
 
+@app.route('/marque_list', methods=['GET'])
+def marque_list_api():
+    api_key = request.headers.get('x-api-key')
+    if api_key != API_KEY:
+        return jsonify({"error": "Unauthorized"}), 401
+    if request.method == 'GET':
+        marque_list = get_marque_list()
+        return marque_list , 200
+
+@app.route('/modele_list', methods=['GET'])
+def modèle_list_api():
+    api_key = request.headers.get('x-api-key')
+    if api_key != API_KEY:
+        return jsonify({"error": "Unauthorized"}), 401
+    if request.method == 'GET':
+        marque = str(request.args.get("marque")).upper()
+        modèle_list = get_modèle_list(marque)
+        return modèle_list , 200
+
+@app.route('/sous_modele_list', methods=['GET'])
+def sous_modèle_list_api():
+    api_key = request.headers.get('x-api-key')
+    if api_key != API_KEY:
+        return jsonify({"error": "Unauthorized"}), 401
+    if request.method == 'GET':
+        marque = str(request.args.get("marque")).upper()
+        modèle = request.args.get("modele")
+        sous_modèle_list = get_sous_modèle_list(marque,modèle)
+        return sous_modèle_list , 200
+
+
+
 @app.route('/')
 def index():
     return "API Flask est en ligne !"

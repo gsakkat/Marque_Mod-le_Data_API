@@ -103,6 +103,27 @@ def add_sous_modèle(sous_modèle, modèle, marque):
     df_sous_modèle.loc[len(df_sous_modèle)] = new_row_sous_modèle
     df_marque_modèle.loc[len(df_marque_modèle)] = new_row_marque_modèle
 
+def get_marque_list():
+    global df_marque
+    return list(df_marque["Marque"])
 
+def get_modèle_list(marque = None):
+    global df_modèle
+    if not marque:
+        return list(df_modèle["Modèle"])
+    else:
+        return list(df_modèle[df_modèle["Marque"]== marque]["Modèle"])
 
-
+def get_sous_modèle_list(marque = None, modèle = None):
+    global df_sous_modèle
+    if marque:
+        if modèle:
+            return list(df_sous_modèle[(df_sous_modèle["Marque"]==marque)&(df_sous_modèle["Modèle"]==modèle)]
+                        ["Sous-Modèle"])
+        else:
+            return list(df_sous_modèle[df_sous_modèle["Marque"]==marque]["Sous-Modèle"])
+    else:
+        if modèle:
+            return list(df_sous_modèle[df_sous_modèle["Modèle"]==modèle]["Sous-Modèle"])
+        else:
+            return list(df_sous_modèle["Sous-Modèle"])
